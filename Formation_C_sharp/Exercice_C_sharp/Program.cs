@@ -8,9 +8,10 @@ namespace Exercice_C_sharp
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
-            
+            Console.WriteLine("hello");
+            Console.ReadKey();
         }
     }
 }
