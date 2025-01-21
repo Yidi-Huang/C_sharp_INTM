@@ -37,20 +37,24 @@ namespace Exercice_C_sharp
         {
             int gauche = 0 ;
             int droite = ntable.Length - 1;
-            int m = (gauche + droite) / 2;
+
+            while (gauche<=droite)
+            {
+                int m = (gauche + droite) / 2;
 
 
-            if (ntable[m]==v)
-            {
-                return m;
-            }
-            else if (ntable[m]<v)
-            {
-                gauche = m + 1;
-            }
-            else
-            {
-                droite = m + 1;
+                if (ntable[m]==v)
+                {
+                    return m;
+                }
+                else if (ntable[m]<v)
+                {
+                    gauche = m + 1;
+                }
+                else
+                {
+                    droite = m + 1;
+                }
             }
             return -1;
 

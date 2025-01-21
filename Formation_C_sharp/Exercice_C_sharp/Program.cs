@@ -10,7 +10,6 @@ namespace Exercice_C_sharp
     {
         static void Main()
         {
-            //Console.WriteLine("hello");
             int x = 9;
             int y = 4;
             int z = 0;
@@ -43,7 +42,7 @@ namespace Exercice_C_sharp
 
 
             int[] tab = new int [] { 1, -5, 10, -3, 0, 4, 2, -7 };
-            int n21 = 0;
+            int n21 = 10;
             int indice = Exercice21.LinearSearch(tab, n21);
             Console.WriteLine($"L'indice de {n21} est {indice}.");
 
