@@ -41,8 +41,8 @@ namespace Exercice_C_sharp
             Console.WriteLine("  ");
 
 
-            int[] tab = new int [] { 1, -5, 10, -3, 0, 4, 2, -7 };
-            int n21 = 10;
+            int[] tab = new int [] { -4, -5, 10, -3, 0, 4, 1, -7 };
+            int n21 = 1;
             int indice = Exercice21.LinearSearch(tab, n21);
             Console.WriteLine($"L'indice de {n21} est {indice}.");
 
