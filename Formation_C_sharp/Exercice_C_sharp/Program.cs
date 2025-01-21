@@ -50,6 +50,25 @@ namespace Exercice_C_sharp
             Array.Sort(tab);
             int indice2 = Exercice21.BinarySearch(tab, n21);
             Console.WriteLine($"L'indice de {n21} est {indice2}.");
+            Console.WriteLine("  ");
+
+            int[] tb1 = { 1, 2, 3 };
+            int[] tb2 = { -1, -4, 0 };
+            int[] tb3 = { 1, 1, 1 };
+            int[,] matrice1 = Exercice22.BuildingMatrix(tb1, tb2);
+            int[,] matrice2 = Exercice22.BuildingMatrix(tb1, tb3);
+            //Console.WriteLine(matrice[1, 1]);
+
+            Console.WriteLine("  ");
+            int[,] matrice_a = Exercice22.Addition(matrice1, matrice2);
+            int[,] matrice_s = Exercice22.Substraction(matrice1, matrice2);
+
+            Exercice22.DisplayMatrix(matrice_a);
+            Exercice22.DisplayMatrix(matrice_s);
+
+            int[,] matrice_m = Exercice22.Multiplication(matrice_a, matrice_s);
+            Exercice22.DisplayMatrix(matrice_m);
+
 
             Console.ReadKey();
         }
