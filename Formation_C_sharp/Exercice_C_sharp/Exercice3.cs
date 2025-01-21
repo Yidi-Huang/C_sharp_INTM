@@ -19,7 +19,32 @@ namespace Exercice_C_sharp
 
             Console.WriteLine($"Le nombre total au niveau {n} est : {2*n-1}.");
 
+            Console.WriteLine($"La position du sommet est : {n}, {n}.");
+
+            int j=1;
             
+            for (;j<=n;j++)
+            { 
+                string s = new String(' ',n-j);
+                string b;
+                if (isSmooth)    
+                {
+                    b = new String('*',2*j-1);
+                    Console.WriteLine(s+b+s);
+                }
+                else
+                {
+                    if (j%2==0)
+                    {
+                        b = new String('-',2*j-1);
+                    }
+                    else
+                    {
+                        b = new String('*',2*j-1);
+                    }
+                    Console.WriteLine(s+b+s);
+                }
+            }
         }
     }
 }

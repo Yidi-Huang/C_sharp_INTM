@@ -31,8 +31,10 @@ namespace Exercice_C_sharp
             string pmsg = Exercice2.GoodDay(h);
             Console.WriteLine($"Il est {h} heure, {pmsg}");
 
-            bool isS = true; 
+            bool isS = false; 
             Exercice3.PyramidConstruction(y, isS);
+
+
             Console.ReadKey();
         }
 
