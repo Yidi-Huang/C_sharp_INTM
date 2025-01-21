@@ -32,8 +32,24 @@ namespace Exercice_C_sharp
             Console.WriteLine($"Il est {h} heure, {pmsg}");
 
             bool isS = false; 
-            Exercice3.PyramidConstruction(y, isS);
+            Exercice3.PyramidConstruction(x, isS);
+            Console.WriteLine("  ");
 
+            int res = Exercice4.Factorial(y);
+            Console.WriteLine($"Factorial est {res}.");
+            int res2 = Exercice4.FactorialRecursive(y);
+            Console.WriteLine($"Factorial est {res2}.");
+            Console.WriteLine("  ");
+
+
+            int[] tab = new int [] { 1, -5, 10, -3, 0, 4, 2, -7 };
+            int n21 = 0;
+            int indice = Exercice21.LinearSearch(tab, n21);
+            Console.WriteLine($"L'indice de {n21} est {indice}.");
+
+            Array.Sort(tab);
+            int indice2 = Exercice21.BinarySearch(tab, n21);
+            Console.WriteLine($"L'indice de {n21} est {indice2}.");
 
             Console.ReadKey();
         }
