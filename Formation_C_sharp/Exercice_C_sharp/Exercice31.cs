@@ -45,4 +45,117 @@ namespace Exercice_C_sharp
 
 
     }
+
+    public class Morse
+    {
+        private const string Taah = "===";
+        private const string Ti = "=";
+        private const string Point = ".";
+        private const string PointLetter = "...";
+        private const string PointWord = ".....";
+
+        private readonly Dictionary<string, char> _alphabet;
+
+        public Morse()
+        {
+            _alphabet = new Dictionary<string, char>()
+            {
+                {$"{Ti}.{Taah}", 'A'},
+                {$"{Taah}.{Ti}.{Ti}.{Ti}", 'B'},
+                {$"{Taah}.{Ti}.{Taah}.{Ti}", 'C'},
+                {$"{Taah}.{Ti}.{Ti}", 'D'},
+                {$"{Ti}", 'E'},
+                {$"{Ti}.{Ti}.{Taah}.{Ti}", 'F'},
+                {$"{Taah}.{Taah}.{Ti}", 'G'},
+                {$"{Ti}.{Ti}.{Ti}.{Ti}", 'H'},
+                {$"{Ti}.{Ti}", 'I'},
+                {$"{Ti}.{Taah}.{Taah}.{Taah}", 'J'},
+                {$"{Taah}.{Ti}.{Taah}", 'K'},
+                {$"{Ti}.{Taah}.{Ti}.{Ti}", 'L'},
+                {$"{Taah}.{Taah}", 'M'},
+                {$"{Taah}.{Ti}", 'N'},
+                {$"{Taah}.{Taah}.{Taah}", 'O'},
+                {$"{Ti}.{Taah}.{Taah}.{Ti}", 'P'},
+                {$"{Taah}.{Taah}.{Ti}.{Taah}", 'Q'},
+                {$"{Ti}.{Taah}.{Ti}", 'R'},
+                {$"{Ti}.{Ti}.{Ti}", 'S'},
+                {$"{Taah}", 'T'},
+                {$"{Ti}.{Ti}.{Taah}", 'U'},
+                {$"{Ti}.{Ti}.{Ti}.{Taah}", 'V'},
+                {$"{Ti}.{Taah}.{Taah}", 'W'},
+                {$"{Taah}.{Ti}.{Ti}.{Taah}", 'X'},
+                {$"{Taah}.{Ti}.{Taah}.{Taah}", 'Y'},
+                {$"{Taah}.{Taah}.{Ti}.{Ti}", 'Z'},
+            };
+        }
+
+        public string MorseTranslation(string code)
+        {
+            StringBuilder trans = new StringBuilder();
+
+            string[] mots = code.Split(new string[] { "....." }, StringSplitOptions.RemoveEmptyEntries);
+            foreach (string mot in mots)
+            {
+                string[] caras = mot.Split(new string[] { "..." }, StringSplitOptions.RemoveEmptyEntries);
+                foreach (string cara in caras)
+                {
+                    bool isFind = _alphabet.TryGetValue(cara, out char lettre);
+                    if (isFind)
+                    {
+                        trans.Append(lettre);
+                    }
+                    else
+                    {
+                        trans.Append('?');
+                    }
+                }
+                trans.Append(' ');
+            }
+            return trans.ToString();
+        }
+
+        public string EfficientMorseTranslation(string code)
+        {
+            StringBuilder trans = new StringBuilder();
+
+            code = code.Trim('.');
+            code = code.Replace("=..=", "=.=");
+            code = code.Replace("=....=", "=...=");
+            
+            // +5
+
+
+            string[] mots = code.Split(new string[] { "....." }, StringSplitOptions.RemoveEmptyEntries);
+            foreach (string mot in mots)
+            {
+                string[] caras = mot.Split(new string[] { "..." }, StringSplitOptions.RemoveEmptyEntries);
+                foreach (string cara in caras)
+                {
+                    bool isFind = _alphabet.TryGetValue(cara, out char lettre);
+                    if (isFind)
+                    {
+                        trans.Append(lettre);
+                    }
+                    else
+                    {
+                        trans.Append('?');
+                    }
+                }
+                trans.Append(' ');
+            }
+            return trans.ToString();
+        }
+
+        public string MorseEncryption(string sentence)
+        {
+            StringBuilder trans = new StringBuilder();
+
+
+            return trans.ToString();
+        }
+
+
+
+
+    }
 }
