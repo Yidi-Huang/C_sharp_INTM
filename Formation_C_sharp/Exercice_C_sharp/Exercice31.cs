@@ -27,7 +27,7 @@ namespace Exercice_C_sharp
 
                             while (!sr.EndOfStream)
                             {
-                                //Console.WriteLine(sr.ReadLine());
+                                sr.ReadLine();
                                 string note_l = sr.ReadLine();
                                 string[] infos = note_l.Split(';');
 
@@ -59,6 +59,7 @@ namespace Exercice_C_sharp
                 {
                     using (srw = new StreamWriter(file))
                     {
+                        srw.WriteLine("Matière;Moyenne");
                         foreach (var pair in dico_note)
                         {
                             double moy = pair.Value[1] / pair.Value[0];
