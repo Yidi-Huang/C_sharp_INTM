@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace Exercice_C_sharp
 {
@@ -84,9 +85,13 @@ namespace Exercice_C_sharp
             //string p2 = Morse.MorseEncryption(ch2);
             //Console.WriteLine(p2);
 
-            string ch42 = "{[]}())";
+            string ch42 = "{[2+4]}*(3-6)";
             bool isOk = Exercice42.BracketsControls(ch42);
             Console.WriteLine(isOk);
+
+            string infile = "C:\\Users\\Formation\\Downloads\\Notes.txt";
+            string outfile = "C:\\Users\\Formation\\Downloads\\Moyenne.txt";
+            Exercice31.SchoolMeans(infile,outfile);
 
 
             Console.ReadKey();

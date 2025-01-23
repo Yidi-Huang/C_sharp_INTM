@@ -14,7 +14,18 @@ namespace Exercice_C_sharp
             var s = new Stack<char>();
             string po = "([{";
             string pf = ")]}";
-            foreach (char cara in sentence)
+
+            StringBuilder s2 = new StringBuilder();
+            foreach (char ele in sentence)
+            {
+                if (po.Contains(ele) || pf.Contains(ele))
+                {
+                    s2.Append(ele);
+                }
+            }
+
+            string sentence2 = s2.ToString();
+            foreach (char cara in sentence2)
             {
                 if (po.Contains(cara))
                 {
