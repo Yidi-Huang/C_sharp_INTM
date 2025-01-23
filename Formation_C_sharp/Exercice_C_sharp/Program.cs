@@ -67,22 +67,26 @@ namespace Exercice_C_sharp
             //int[,] matrice_m = Exercice22.Multiplication(matrice_a, matrice_s);
             //Exercice22.DisplayMatrix(matrice_m);
 
-            string ch = "===.=.===.=...===.===.===...===.=.=...=.....===.===";
-            int sum31 = Exercice31.LettersCount(ch);
-            Console.WriteLine($"Le nombre de lettres dans cette phrase est : {sum31}.");
-            int sum32 = Exercice31.WordsCount(ch);
-            Console.WriteLine($"Le nombre de mots dans cette phrase est : {sum32}.");
-            Morse Morse = new Morse();
-            string phrase = Morse.MorseTranslation(ch);
-            Console.WriteLine(phrase);
+            //string ch = "===.=.===.=...===.===.===...===.=.=...=.....===.===";
+            //int sum31 = Exercice41.LettersCount(ch);
+            //Console.WriteLine($"Le nombre de lettres dans cette phrase est : {sum31}.");
+            //int sum32 = Exercice41.WordsCount(ch);
+            //Console.WriteLine($"Le nombre de mots dans cette phrase est : {sum32}.");
+            //Morse Morse = new Morse();
+            //string phrase = Morse.MorseTranslation(ch);
+            //Console.WriteLine(phrase);
 
-            string ch3 = "===.=.===.=....===..===..===...===.=.=...=.......===.===";
-            string p3 = Morse.EfficientMorseTranslation(ch3);
-            Console.WriteLine(p3);
+            //string ch3 = "===.=.===.=....===..===..===...===.=.=...=.......===.===";
+            //string p3 = Morse.EfficientMorseTranslation(ch3);
+            //Console.WriteLine(p3);
 
-            string ch2 = "CODE M";
-            string p2 = Morse.MorseEncryption(ch2);
-            Console.WriteLine(p2);
+            //string ch2 = "CODE M";
+            //string p2 = Morse.MorseEncryption(ch2);
+            //Console.WriteLine(p2);
+
+            string ch42 = "{[]}())";
+            bool isOk = Exercice42.BracketsControls(ch42);
+            Console.WriteLine(isOk);
 
 
             Console.ReadKey();

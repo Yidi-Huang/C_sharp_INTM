@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Exercice_C_sharp
 {
-    class Exercice31
+    class Exercice41
     {
 
         
