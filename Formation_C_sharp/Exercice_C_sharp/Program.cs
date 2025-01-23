@@ -76,8 +76,12 @@ namespace Exercice_C_sharp
             string phrase = Morse.MorseTranslation(ch);
             Console.WriteLine(phrase);
 
-            string ch3 = "===.=.===.=....===..===..===...===.=.=...=.....";
-            string p2 = Morse.EfficientMorseTranslation(ch3);
+            string ch3 = "===.=.===.=....===..===..===...===.=.=...=.......===.===";
+            string p3 = Morse.EfficientMorseTranslation(ch3);
+            Console.WriteLine(p3);
+
+            string ch2 = "CODE M";
+            string p2 = Morse.MorseEncryption(ch2);
             Console.WriteLine(p2);
 
 

@@ -121,9 +121,9 @@ namespace Exercice_C_sharp
             code = code.Trim('.');
             code = code.Replace("=..=", "=.=");
             code = code.Replace("=....=", "=...=");
-            
-            // +5
 
+            // +5
+            code = ReduceLength(code);
 
             string[] mots = code.Split(new string[] { "....." }, StringSplitOptions.RemoveEmptyEntries);
             foreach (string mot in mots)
@@ -149,9 +149,48 @@ namespace Exercice_C_sharp
         public string MorseEncryption(string sentence)
         {
             StringBuilder trans = new StringBuilder();
+            string[] mots = sentence.Split(' ');
+            foreach (string mot in mots)
+            {
+                foreach (char cara in mot)
+                {
+                    foreach(var pair in _alphabet)
+                    {
+                        if (pair.Value == cara)
+                        {
+                            trans.Append(pair.Key);
+                            break;
+                        }
+                    }
+                    trans.Append("...");
+                }
+                trans.Append(".....");
+            }
+            return ReduceLength(trans.ToString());
+        }
 
+        public string ReduceLength(string ch)
+        {
+            StringBuilder nch = new StringBuilder();
+            int c = 0;
+            for (int i = 0; i < ch.Length; i++)
+            {
+                if (ch[i] == '.')
+                {
+                    c++;
+                    if (c <= 5)
+                    {
+                        nch.Append(ch[i]);
+                    }
+                }
+                else
+                {
+                    c = 0;
+                    nch.Append(ch[i]);
+                }
+            }
 
-            return trans.ToString();
+            return nch.ToString();
         }
 
 
