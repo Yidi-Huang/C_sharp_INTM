@@ -24,10 +24,10 @@ namespace Exercice_C_sharp
                     {
                         using (sr= new StreamReader(file))
                         {
-
+                            sr.ReadLine();
                             while (!sr.EndOfStream)
                             {
-                                sr.ReadLine();
+                                //sr.ReadLine();
                                 string note_l = sr.ReadLine();
                                 string[] infos = note_l.Split(';');
 
@@ -45,7 +45,6 @@ namespace Exercice_C_sharp
                                     List<double> intern = new List<double> { 1, note };
                                     dico_note[matiere] = intern;
                                 }
-
                             }
                             //Console.WriteLine(dico_note["MATHS"][0]);
                         }
@@ -65,7 +64,6 @@ namespace Exercice_C_sharp
                             double moy = pair.Value[1] / pair.Value[0];
                             srw.WriteLine($"{pair.Key};{moy:#0.0}");
                         }
-                        
                     }
                 }
             }
