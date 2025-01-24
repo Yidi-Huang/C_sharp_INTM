@@ -24,23 +24,44 @@ namespace Percolation
 
     public class PercolationSimulation
     {
+        Random rnd = new Random();
+
         public PclData MeanPercolationValue(int size, int t)
         {
-            return new PclData();
+            double sum = 0;        
+            double sumSq = 0;
+
+            for (int i = 0; i < t; i++)
+            {
+                double p = PercolationValue(size); 
+                sum += p;                      
+                sumSq += p * p;            
+            }
+
+            double m = sum / t;
+
+            double StDv = Math.Sqrt((sumSq / t) - (m * m));
+
+            return new PclData
+            {
+                Mean = m,
+                StandardDeviation = StDv,
+                Fraction = 0
+            };
         }
 
         public double PercolationValue(int size)
         {
+
             double cases = size * size;
             Percolation Percolation = new Percolation(size);
 
             double oc = 0;
             bool percolate = false;
 
-            
-            while(!percolate)
+            while (!percolate)
             {
-                Random rnd = new Random();  
+                
                 int i = rnd.Next(0, size);
                 int j = rnd.Next(0, size);
 
@@ -50,11 +71,10 @@ namespace Percolation
                     j = rnd.Next(0, size);
                 }
 
-                if (!Percolation.IsOpen(i,j))
-                {
-                    Percolation.Open(i, j);
-                    oc++;
-                }
+
+                Percolation.Open(i, j);
+                oc++;
+
                 percolate = Percolation.Percolate();
             }
 

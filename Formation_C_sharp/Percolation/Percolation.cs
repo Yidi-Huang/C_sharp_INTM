@@ -81,7 +81,7 @@ namespace Percolation
             return nei;
         }
 
-        public void Open(int i, int j)
+        public void Open(int i, int j)  //fonction récursive à faire
         {
             if (i==0)
             {
