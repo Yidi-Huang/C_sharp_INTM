@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -89,9 +90,11 @@ namespace Exercice_C_sharp
             bool isOk = Exercice42.BracketsControls(ch42);
             Console.WriteLine(isOk);
 
-            string infile = "C:\\Users\\Formation\\Downloads\\Notes.csv";
-            string outfile = "C:\\Users\\Formation\\Downloads\\Moyenne.csv";
-            Exercice31.SchoolMeans(infile,outfile);
+            //string infile = "C:\\Users\\Formation\\Downloads\\Notes.csv";
+            //string outfile = "C:\\Users\\Formation\\Downloads\\Moyenne.csv";
+            //Exercice31.SchoolMeans(infile,outfile);
+
+            //
 
 
             Console.ReadKey();
