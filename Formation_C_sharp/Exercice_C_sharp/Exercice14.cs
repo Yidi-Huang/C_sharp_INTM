@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Exercice_C_sharp
 {
-    class Exercice4
+    class Exercice14 // calculer le factorial
     {
         public static int Factorial(int n)
         {

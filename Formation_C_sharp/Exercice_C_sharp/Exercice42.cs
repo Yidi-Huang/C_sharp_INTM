@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Exercice_C_sharp
 {
-    class Exercice42
+    class Exercice42    // vérifier le syntaxe des parenthèses
     {
         public static bool BracketsControls(string sentence)
         {

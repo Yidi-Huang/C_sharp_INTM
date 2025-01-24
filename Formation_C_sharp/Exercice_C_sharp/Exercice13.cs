@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Exercice_C_sharp
 {
-    class Exercice3
+    class Exercice13 // Affichage d'un pyramide
     {
         public static void PyramidConstruction(int n, bool isSmooth)
         {

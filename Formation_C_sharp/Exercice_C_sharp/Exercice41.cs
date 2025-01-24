@@ -6,11 +6,9 @@ using System.Threading.Tasks;
 
 namespace Exercice_C_sharp
 {
-    class Exercice41
-    {
-
-        
-        public static int LettersCount(string code)
+    class Exercice41   // Morse code : encryptage et decryptage
+    {   
+        public static int LettersCount(string code)  
         {
             int sum = 0;
 

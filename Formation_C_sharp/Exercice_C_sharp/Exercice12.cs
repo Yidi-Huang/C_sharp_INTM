@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Exercice_C_sharp
 {
-    class Exercice2
+    class Exercice12   //Afficher greetings selon l'entrée de l'heure
     {
 
 

@@ -7,7 +7,7 @@ using System.IO;
 
 namespace Exercice_C_sharp
 {
-    class Exercice31
+    class Exercice31  // manip des fichiers : read && write
     {
         public static void SchoolMeans(string input, string output)
         {

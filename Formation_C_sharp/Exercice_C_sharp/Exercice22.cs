@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Exercice_C_sharp
 {
-    class Exercice22
+    class Exercice22   // calculer les matrices
     {
         public static int[,] BuildingMatrix(int[] leftVector, int[] rightVector)
         {

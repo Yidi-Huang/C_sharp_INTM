@@ -29,16 +29,16 @@ namespace Exercice_C_sharp
             //Pow(x, c);
 
             //int h = 13;
-            //string pmsg = Exercice2.GoodDay(h);
+            //string pmsg = Exercice12.GoodDay(h);
             //Console.WriteLine($"Il est {h} heure, {pmsg}");
 
             //bool isS = false; 
-            //Exercice3.PyramidConstruction(x, isS);
+            //Exercice13.PyramidConstruction(x, isS);
             //Console.WriteLine("  ");
 
-            //int res = Exercice4.Factorial(y);
+            //int res = Exercice14.Factorial(y);
             //Console.WriteLine($"Factorial est {res}.");
-            //int res2 = Exercice4.FactorialRecursive(y);
+            //int res2 = Exercice14.FactorialRecursive(y);
             //Console.WriteLine($"Factorial est {res2}.");
             //Console.WriteLine("  ");
 
@@ -86,18 +86,14 @@ namespace Exercice_C_sharp
             //string p2 = Morse.MorseEncryption(ch2);
             //Console.WriteLine(p2);
 
-            string ch42 = "{[2+4]}*(3-6)";
-            bool isOk = Exercice42.BracketsControls(ch42);
-            Console.WriteLine(isOk);
+            //string ch42 = "{[2+4]}*(3-6)";
+            //bool isOk = Exercice42.BracketsControls(ch42);
+            //Console.WriteLine(isOk);
 
-            //string infile = "C:\\Users\\Formation\\Downloads\\Notes.csv";
-            //string outfile = "C:\\Users\\Formation\\Downloads\\Moyenne.csv";
-            //Exercice31.SchoolMeans(infile,outfile);
+            string infile = "C:\\Users\\Formation\\Downloads\\Notes.csv";
+            string outfile = "C:\\Users\\Formation\\Downloads\\Moyenne.csv";
+            Exercice31.SchoolMeans(infile, outfile);
 
-            //
-            int t = 7894568;
-            short n = (short)t;
-            Console.WriteLine(n);
 
             Console.ReadKey();
         }

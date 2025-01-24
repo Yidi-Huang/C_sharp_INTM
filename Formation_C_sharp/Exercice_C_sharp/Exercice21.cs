@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Exercice_C_sharp
 {
-    class Exercice21
+    class Exercice21  // chercher une valeur dans le tableau
     {
         public static int LinearSearch(int[] tableau, int v)
         {
