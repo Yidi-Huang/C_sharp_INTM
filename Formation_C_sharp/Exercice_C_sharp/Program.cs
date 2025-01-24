@@ -95,7 +95,9 @@ namespace Exercice_C_sharp
             //Exercice31.SchoolMeans(infile,outfile);
 
             //
-
+            int t = 7894568;
+            short n = (short)t;
+            Console.WriteLine(n);
 
             Console.ReadKey();
         }

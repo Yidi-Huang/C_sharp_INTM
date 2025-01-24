@@ -12,10 +12,9 @@ namespace Exercice_C_sharp
         public static bool BracketsControls(string sentence)
         {
             bool isCorrect = true;
-            //Stack<char> s = new Stack<char>();
+            Stack<char> s = new Stack<char>();
             string po = "([{";
             string pf = ")]}";
-            Stack s = new Stack();
 
             StringBuilder s2 = new StringBuilder();
             foreach (char ele in sentence)
@@ -39,7 +38,7 @@ namespace Exercice_C_sharp
                     {
                         return false;
                     }
-                    char last_o = (char)s.Peek();
+                    char last_o = s.Peek();
                     if (last_o == '(' && cara == ')')
                     {
                         s.Pop();
