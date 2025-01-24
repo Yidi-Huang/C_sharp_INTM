@@ -5,6 +5,8 @@ VisualStudioVersion = 16.0.32901.82
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Exercice_C_sharp", "Exercice_C_sharp\Exercice_C_sharp.csproj", "{8BDCA334-1BA7-45E0-8024-B91FA1FC8BA9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Percolation", "Percolation\Percolation.csproj", "{F904EF86-E542-438B-B5C7-52478A7D8E88}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{8BDCA334-1BA7-45E0-8024-B91FA1FC8BA9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8BDCA334-1BA7-45E0-8024-B91FA1FC8BA9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8BDCA334-1BA7-45E0-8024-B91FA1FC8BA9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F904EF86-E542-438B-B5C7-52478A7D8E88}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F904EF86-E542-438B-B5C7-52478A7D8E88}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F904EF86-E542-438B-B5C7-52478A7D8E88}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F904EF86-E542-438B-B5C7-52478A7D8E88}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
