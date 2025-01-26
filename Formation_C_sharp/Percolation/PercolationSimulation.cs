@@ -40,7 +40,7 @@ namespace Percolation
 
             double m = sum / t;
 
-            double StDv = Math.Sqrt((sumSq / t) - (m * m));
+            double StDv = Math.Sqrt(Math.Abs((sumSq / t) - (m * m)));
 
             return new PclData
             {

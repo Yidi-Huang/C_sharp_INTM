@@ -37,18 +37,21 @@ namespace Percolation
 
         public bool Percolate()
         {
-            for (int i=0;i<_size;i++)
+            // Si je comprends bien, tu vérifies qu'une case de chaque ligne est pleine ce qui doit être effectivement vrai.
+            // mais tu aurais pu simplement vérifier la dernière ligne
+            // code OK 
+            for (int i = 0; i < _size; i++)
             {
                 bool allCheck = false;
-                for (int j=0;j<_size;j++)
+                for (int j = 0; j < _size; j++)
                 {
-                    if (IsFull(i,j))
+                    if (IsFull(i, j))
                     {
                         allCheck = true;
                         break;
                     }
                 }
-                if (allCheck==false)
+                if (allCheck == false)
                 {
                     _percolate = false;
                     return false;
@@ -99,7 +102,8 @@ namespace Percolation
 
             }
 
-            if (IsFull(i,j)) //update voisons
+            if (IsFull(i,j)) //update voisons - c'est ok, mais tu ne lets à jour que les voisins de la première case,
+                // il faudrait que tu répercutes le fait qu'un voisin devienne plein à ces propres voisins. 
             {
                 for (int p = 0; p < neis.Count; p++)
                 {
