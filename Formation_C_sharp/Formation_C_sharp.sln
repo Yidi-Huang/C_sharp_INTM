@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Exercice_C_sharp", "Exercic
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Percolation", "Percolation\Percolation.csproj", "{F904EF86-E542-438B-B5C7-52478A7D8E88}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Projet_Bancaire", "Projet_Bancaire\Projet_Bancaire.csproj", "{15FB58B2-7036-4B89-B689-612F0B026359}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{F904EF86-E542-438B-B5C7-52478A7D8E88}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F904EF86-E542-438B-B5C7-52478A7D8E88}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F904EF86-E542-438B-B5C7-52478A7D8E88}.Release|Any CPU.Build.0 = Release|Any CPU
+		{15FB58B2-7036-4B89-B689-612F0B026359}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{15FB58B2-7036-4B89-B689-612F0B026359}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{15FB58B2-7036-4B89-B689-612F0B026359}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{15FB58B2-7036-4B89-B689-612F0B026359}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
