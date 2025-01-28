@@ -59,30 +59,15 @@ namespace Projet_Bancaire
                     }
                 }
             }
-            else
-            {
-                Console.WriteLine($"File not found: {input}");
-            }
-
             return comptes;
         }
 
-        public string AjoutSolde(decimal somme)
+        public void AjoutSolde(decimal somme)
         {
-            string status;
-            if (somme<0)
-            {
-                status = "KO";
-            }
-            else
-            {
                 solde += somme;
-                status = "OK";
-            }
-            return status;
         }
 
-        public bool evaluateMax(List<decimal> ls, decimal somme)
+        public bool evaluateSum(List<decimal> ls, decimal somme)
         {
             decimal sum = 0m;
             bool estInfer = false;
@@ -107,20 +92,9 @@ namespace Projet_Bancaire
             return estInfer;
         }
 
-        public string RetraitSolde(decimal somme)
+        public void RetraitSolde(decimal somme)
         {
-            string status;
-            if (solde <= somme)                 // 10 derniers virems > 1000
-            {
-                status = "KO";
-            }
-            else
-            {
                 solde -= somme;
-                status = "OK";
-                his_soldes.Add(somme);
-            }
-            return status;
         }
 
     }

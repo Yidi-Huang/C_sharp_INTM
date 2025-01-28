@@ -45,25 +45,118 @@ namespace Projet_Bancaire
                                     Transaction transaction = new Transaction(id_trs, solde_trs, cpt_ex, cpt_ds);
                                     transactions.Add(transaction);
                                 }
-                                else
-                                {
-                                    Console.WriteLine($"Invalid data: {ligne}");
-                                }
-                            }
-                            else
-                            {
-                                Console.WriteLine($"Malformed line: {ligne}");
                             }
                         }
                     }
                 }
             }
-            else
-            {
-                Console.WriteLine($"File not found: {input}");
-            }
-
             return transactions;
         }
+
+        public string ProcessTrans(Transaction transaction, List<Compte> comptes, Dictionary<int,List<Compte>> banques)
+        {
+            Compte compte_ex = null;
+            Compte compte_ds = null;
+            string status = "KO";
+
+
+            foreach (var compte in comptes)
+            {
+                if (compte.id_cpt == transaction.cpt_ex)
+                {
+                    compte_ex = compte;
+                }
+                else if (compte.id_cpt == transaction.cpt_ds)
+                {
+                    compte_ds = compte;
+                }
+            }
+
+            if (transaction.cpt_ex == 0) // Depot
+            {
+                if (Banque.verify_cpt_exist(banques, transaction.cpt_ds) && transaction.solde_trs >= 0)
+                {
+                    compte_ds.AjoutSolde(transaction.solde_trs);
+                    status = "OK";
+                }
+            }
+            else if (transaction.cpt_ds == 0) // Retrait
+            {
+                if (Banque.verify_cpt_exist(banques, transaction.cpt_ex) && compte_ex.solde >= transaction.solde_trs)
+                {
+                    decimal sumHis = 0m;
+                    if (compte_ex.his_soldes.Count >9)
+                    {
+                        compte_ex.his_soldes.RemoveAt(0);
+                    }
+                    foreach (decimal hissolde in compte_ex.his_soldes)
+                    {
+                        sumHis += hissolde;
+                    }
+                    sumHis += transaction.solde_trs;
+
+                    if (sumHis<=1000)
+                    {
+                        compte_ex.RetraitSolde(transaction.solde_trs);
+                        status = "OK";
+                        compte_ex.his_soldes.Add(transaction.solde_trs);
+                    }
+
+                }
+            }
+            else  // Transfer
+            {
+                if (Banque.verify_cpt_exist(banques, transaction.cpt_ds) && Banque.verify_cpt_exist(banques, transaction.cpt_ex))
+                {
+                    if (transaction.solde_trs >= 0 && compte_ex.solde >= transaction.solde_trs)
+                    {
+                        decimal sumHis = 0m;
+                        if (compte_ex.his_soldes.Count > 9)
+                        {
+                            compte_ex.his_soldes.RemoveAt(0);
+                        }
+                        foreach (decimal hissolde in compte_ex.his_soldes)
+                        {
+                            sumHis += hissolde;
+                        }
+                        sumHis += transaction.solde_trs;
+
+                        if (sumHis <= 1000)
+                        {
+                            compte_ex.RetraitSolde(transaction.solde_trs);
+                            compte_ds.AjoutSolde(transaction.solde_trs);
+                            status = "OK";
+                            compte_ex.his_soldes.Add(transaction.solde_trs);
+                        }
+
+
+                    }
+                }
+            }
+            return status;
+
+        }
+
+        public static void WriteStatusFile(string outfile, List<string> transactionStatuses)
+        {
+            FileStream file = null;
+            StreamWriter srw = null;
+
+            using (file = File.Open(outfile, FileMode.Create, FileAccess.Write))
+            {
+                if (file != null)
+                {
+                    using (srw = new StreamWriter(file))
+                    {
+                        //srw.WriteLine("Matière;Moyenne");
+                        foreach (var status in transactionStatuses)
+                        {
+                            srw.WriteLine(status);
+                        }
+                    }
+                }
+            }
+        }
+
     }
 }

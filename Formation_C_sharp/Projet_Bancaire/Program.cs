@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Projet_Bancaire
 {
@@ -10,36 +7,33 @@ namespace Projet_Bancaire
     {
         static void Main()
         {
-            //Console.WriteLine("hi");
-            string input = "C:\\Users\\Formation\\Downloads\\Compte.csv";
-            List<Compte> cpts = Compte.ChargeCompte(input);
-            foreach(Compte c in cpts)
+            string inputComptes = "C:\\Users\\Formation\\Downloads\\Compte.csv";
+            string inputTransactions = "C:\\Users\\Formation\\Downloads\\Transaction.csv";
+            string outputFile = "C:\\Users\\Formation\\Downloads\\StatutsTransactions.csv";
+
+            List<Compte> comptes = Compte.ChargeCompte(inputComptes);
+            List<Transaction> transactions = Transaction.ChargeTrans(inputTransactions);
+            Dictionary<int, List<Compte>> banques = Banque.ChargeBanque(inputComptes);
+
+            List<string> transactionStatuses = new List<string>();
+            foreach (Transaction transaction in transactions)
             {
-                Console.WriteLine(c.id_cpt + " "+ c.solde + " " + c.his_soldes.Count);
+                string status = transaction.ProcessTrans(transaction, comptes, banques);
+
+                transactionStatuses.Add($"{transaction.id_trs};{status}");
+                Console.WriteLine($"{transaction.id_trs};{status}");
             }
 
+            Transaction.WriteStatusFile(outputFile, transactionStatuses);
 
-            Console.WriteLine("");
-
-            List<int> banques = Banque.ChargeBanque(input);                  // liste des N comptes
-            foreach (var c in banques)
+            Console.WriteLine(" ");
+            Console.WriteLine("Soldes comptes:");
+            foreach (var compte in comptes)
             {
-                Console.WriteLine(c);
+                Console.WriteLine($"ID: {compte.id_cpt} Solde: {compte.solde}");
             }
-            Console.WriteLine("");
-
-
-            string input2 = "C:\\Users\\Formation\\Downloads\\Transaction.csv";
-            List<Transaction> trs = Transaction.ChargeTrans(input2);                // liste des transactions
-            foreach (Transaction t in trs)
-            {
-                Console.WriteLine(t.id_trs + " " + t.solde_trs + " " + t.cpt_ex + " " + t.cpt_ds);
-            }
-
 
             Console.ReadKey();
-
         }
-
     }
 }
