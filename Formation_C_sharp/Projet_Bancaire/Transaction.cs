@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.IO;
 
 namespace Projet_Bancaire
@@ -128,7 +131,6 @@ namespace Projet_Bancaire
                             status = "OK";
                             compte_ex.his_soldes.Add(transaction.solde_trs);
                         }
-
 
                     }
                 }

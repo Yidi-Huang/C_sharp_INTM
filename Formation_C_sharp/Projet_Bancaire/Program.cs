@@ -1,5 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.IO;
 
 namespace Projet_Bancaire
 {
@@ -27,7 +31,7 @@ namespace Projet_Bancaire
             Transaction.WriteStatusFile(outputFile, transactionStatuses);
 
             Console.WriteLine(" ");
-            Console.WriteLine("Soldes comptes:");
+            Console.WriteLine("Soldes des comptes:");
             foreach (var compte in comptes)
             {
                 Console.WriteLine($"ID: {compte.id_cpt} Solde: {compte.solde}");

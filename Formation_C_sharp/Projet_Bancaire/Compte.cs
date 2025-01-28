@@ -67,31 +67,6 @@ namespace Projet_Bancaire
                 solde += somme;
         }
 
-        public bool evaluateSum(List<decimal> ls, decimal somme)
-        {
-            decimal sum = 0m;
-            bool estInfer = false;
-            if (ls.Count >9)
-            {
-                ls.RemoveAt(0);
-            }
-            foreach (decimal s in ls)
-            {
-                sum += s;
-            }
-            sum += somme;
-
-            if (sum < 1000)
-            {
-                estInfer = true;
-            }
-            else
-            {
-                estInfer = false;
-            }
-            return estInfer;
-        }
-
         public void RetraitSolde(decimal somme)
         {
                 solde -= somme;
