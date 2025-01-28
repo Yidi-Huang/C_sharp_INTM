@@ -4,13 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using System.Globalization;
 
 namespace Projet_Bancaire
 {
     public class Transaction
     {
         public int id_trs;
-        public decimal solde_trs;
+        public decimal solde_trs { get; set; }
         public int cpt_ex;
         public int cpt_ds;
 
@@ -23,6 +24,7 @@ namespace Projet_Bancaire
         }
         public static List<Transaction> ChargeTrans(string input)
         {
+            CultureInfo.CurrentCulture = new CultureInfo("en-US");
             List<Transaction> transactions = new List<Transaction>();
 
             if (File.Exists(input))
@@ -56,7 +58,7 @@ namespace Projet_Bancaire
             return transactions;
         }
 
-        public string ProcessTrans(Transaction transaction, List<Compte> comptes, Dictionary<int,List<Compte>> banques)
+        public string ProcessTrans(Transaction transaction, List<Compte> comptes, Dictionary<int,Compte> banques)
         {
             Compte compte_ex = null;
             Compte compte_ds = null;

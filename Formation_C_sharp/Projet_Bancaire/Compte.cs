@@ -1,14 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.IO;
+using System.Globalization;
 
 namespace Projet_Bancaire
 {
     public class Compte
     {
-        public int id_cpt;
-        public decimal solde;
-        public List<decimal> his_soldes;
+        public int id_cpt { get; }
+        public decimal solde { get; set; }
+        public List<decimal> his_soldes { get; set; }
 
         public Compte(int ID_C, decimal SOLDE, List<decimal> LS)
         {
@@ -18,6 +22,7 @@ namespace Projet_Bancaire
         }
         public static List<Compte> ChargeCompte(string input)
         {
+            CultureInfo.CurrentCulture = new CultureInfo("en-US");
             List<Compte> comptes = new List<Compte>();
 
             if (File.Exists(input))

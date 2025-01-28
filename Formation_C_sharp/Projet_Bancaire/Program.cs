@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using System.Globalization;
 
 namespace Projet_Bancaire
 {
@@ -15,9 +16,11 @@ namespace Projet_Bancaire
             string inputTransactions = "C:\\Users\\Formation\\Downloads\\Transaction.csv";
             string outputFile = "C:\\Users\\Formation\\Downloads\\StatutsTransactions.csv";
 
+            //Si nécessaire, vérifier l'identifiant unique dans Compte.csv et Transaction.csv, avec une fonction supplémentaire
+
             List<Compte> comptes = Compte.ChargeCompte(inputComptes);
             List<Transaction> transactions = Transaction.ChargeTrans(inputTransactions);
-            Dictionary<int, List<Compte>> banques = Banque.ChargeBanque(inputComptes);
+            Dictionary<int, Compte> banques = Banque.ChargeBanque(inputComptes);
 
             List<string> transactionStatuses = new List<string>();
             foreach (Transaction transaction in transactions)

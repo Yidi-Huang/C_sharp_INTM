@@ -8,21 +8,21 @@ using System.Globalization;
 
 namespace Projet_Bancaire
 {
-    public class Banque
+    public class Banque_an
     {
         public int id_cpt { get; set; }
-        public Compte compte { get; set; }
+        public List<Compte> compte { get; set; }
 
-        public Banque(int ID_C, Compte LS)
+        public Banque_an(int ID_C, List<Compte> LS)
         {
             id_cpt = ID_C;
             compte = LS;
         }
 
-        public static Dictionary<int, Compte> ChargeBanque(string input)
+        public static Dictionary<int, List<Compte>> ChargeBanque(string input)
         {
             CultureInfo.CurrentCulture = new CultureInfo("en-US");
-            Dictionary<int, Compte> banques = new Dictionary<int, Compte>();
+            Dictionary<int, List<Compte>> banques = new Dictionary<int, List<Compte>>();
 
             if (File.Exists(input))
             {
@@ -33,7 +33,7 @@ namespace Projet_Bancaire
                         while (!sr.EndOfStream)
                         {
                             string ligne = sr.ReadLine();
-                            string[] infos = ligne.Split(';'); 
+                            string[] infos = ligne.Split(';');
 
                             if (infos[1] != "")
                             {
@@ -45,25 +45,25 @@ namespace Projet_Bancaire
                                 {
                                     Compte compte = new Compte(id_cpt, solde, his_soldes);
 
-                                    if (! banques.ContainsKey(id_cpt))
+                                    if (!banques.ContainsKey(id_cpt))
                                     {
-                                        banques[id_cpt] = compte;
+                                        banques[id_cpt] = new List<Compte> { compte };
                                     }
                                 }
                             }
                             else
                             {
                                 bool estInt1 = int.TryParse(infos[0], out int id_cpt);
-                                decimal solde = 0m; 
+                                decimal solde = 0m;
                                 List<decimal> his_soldes = new List<decimal>();
 
                                 if (estInt1)
                                 {
                                     Compte compte = new Compte(id_cpt, solde, his_soldes);
 
-                                    if (! banques.ContainsKey(id_cpt))
+                                    if (!banques.ContainsKey(id_cpt))
                                     {
-                                        banques[id_cpt] = compte ;
+                                        banques[id_cpt] = new List<Compte> { compte };
                                     }
                                 }
                             }
@@ -74,7 +74,7 @@ namespace Projet_Bancaire
             return banques;
         }
 
-        public static bool verify_cpt_exist(Dictionary<int,Compte> banques, int id_cpt)
+        public static bool verify_cpt_exist(Dictionary<int, List<Compte>> banques, int id_cpt)
         {
             if (banques.ContainsKey(id_cpt))
             {
