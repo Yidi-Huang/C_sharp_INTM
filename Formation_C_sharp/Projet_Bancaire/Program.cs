@@ -27,7 +27,6 @@ namespace Projet_Bancaire
             foreach (Transaction transaction in transactions)
             {
                 transactionStatuses.Add($"{transaction.id_trs};{transaction.status}");
-                Console.WriteLine($"{transaction.id_trs};{transaction.status}");
             }
 
             Transaction.WriteStatusFile(outputFile, transactionStatuses);
