@@ -69,12 +69,13 @@ namespace Projet_Bancaire
 
         public void AjoutSolde(decimal somme)
         {
-                solde += somme;
+            solde += somme;
         }
 
         public void RetraitSolde(decimal somme)
         {
-                solde -= somme;
+            solde -= somme;
+            his_soldes.Add(somme);
         }
 
     }

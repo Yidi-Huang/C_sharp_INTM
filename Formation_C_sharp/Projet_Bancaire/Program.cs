@@ -16,26 +16,25 @@ namespace Projet_Bancaire
             string inputTransactions = "C:\\Users\\Formation\\Downloads\\Transaction.csv";
             string outputFile = "C:\\Users\\Formation\\Downloads\\StatutsTransactions.csv";
 
-            //Si nécessaire, vérifier l'identifiant unique dans Compte.csv et Transaction.csv, avec une fonction supplémentaire
 
             List<Compte> comptes = Compte.ChargeCompte(inputComptes);
             List<Transaction> transactions = Transaction.ChargeTrans(inputTransactions);
             Dictionary<int, Compte> banques = Banque.ChargeBanque(inputComptes);
 
             List<string> transactionStatuses = new List<string>();
+            Transaction.ProcessTrans(transactions, comptes, banques);
+
             foreach (Transaction transaction in transactions)
             {
-                string status = transaction.ProcessTrans(transaction, comptes, banques);
-
-                transactionStatuses.Add($"{transaction.id_trs};{status}");
-                Console.WriteLine($"{transaction.id_trs};{status}");
+                transactionStatuses.Add($"{transaction.id_trs};{transaction.status}");
+                Console.WriteLine($"{transaction.id_trs};{transaction.status}");
             }
 
             Transaction.WriteStatusFile(outputFile, transactionStatuses);
 
             Console.WriteLine(" ");
             Console.WriteLine("Soldes des comptes:");
-            foreach (var compte in comptes)
+            foreach (var compte in banques.Values)
             {
                 Console.WriteLine($"ID: {compte.id_cpt} Solde: {compte.solde}");
             }

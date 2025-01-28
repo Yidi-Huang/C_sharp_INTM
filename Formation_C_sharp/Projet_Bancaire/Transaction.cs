@@ -11,16 +11,18 @@ namespace Projet_Bancaire
     public class Transaction
     {
         public int id_trs;
-        public decimal solde_trs { get; set; }
+        public decimal solde_trs { get; }
         public int cpt_ex;
         public int cpt_ds;
+        public string status {get;set;}
 
-        public Transaction(int ID_C, decimal SOLDE, int ID_EX, int ID_DS)
+        public Transaction(int ID_C, decimal SOLDE, int ID_EX, int ID_DS, string ST)
         {
             id_trs = ID_C;
             solde_trs = SOLDE;
             cpt_ex = ID_EX;
             cpt_ds = ID_DS;
+            status = ST;
         }
         public static List<Transaction> ChargeTrans(string input)
         {
@@ -44,10 +46,11 @@ namespace Projet_Bancaire
                                 bool estDec = decimal.TryParse(infos[1], out decimal solde_trs);
                                 bool estInt2 = int.TryParse(infos[2], out int cpt_ex);
                                 bool estInt3 = int.TryParse(infos[3], out int cpt_ds);
+                                string status = "KO";
 
                                 if (estInt1 && estDec && estInt2 && estInt3)
                                 {
-                                    Transaction transaction = new Transaction(id_trs, solde_trs, cpt_ex, cpt_ds);
+                                    Transaction transaction = new Transaction(id_trs, solde_trs, cpt_ex, cpt_ds,status);
                                     transactions.Add(transaction);
                                 }
                             }
@@ -58,86 +61,91 @@ namespace Projet_Bancaire
             return transactions;
         }
 
-        public string ProcessTrans(Transaction transaction, List<Compte> comptes, Dictionary<int,Compte> banques)
+        public static void ProcessTrans(List<Transaction> transactions, List<Compte> comptes, Dictionary<int,Compte> banques)
         {
-            Compte compte_ex = null;
-            Compte compte_ds = null;
-            string status = "KO";
-
-
-            foreach (var compte in comptes)
+            List<int> ids_trs = new List<int>();
+            foreach (Transaction transaction in transactions)
             {
-                if (compte.id_cpt == transaction.cpt_ex)
+                if (!ids_trs.Contains(transaction.id_trs))
                 {
-                    compte_ex = compte;
-                }
-                else if (compte.id_cpt == transaction.cpt_ds)
-                {
-                    compte_ds = compte;
-                }
-            }
+                    Compte compte_ex = null;
+                    Compte compte_ds = null;
 
-            if (transaction.cpt_ex == 0) // Depot
-            {
-                if (Banque.verify_cpt_exist(banques, transaction.cpt_ds) && transaction.solde_trs >= 0)
-                {
-                    compte_ds.AjoutSolde(transaction.solde_trs);
-                    status = "OK";
-                }
-            }
-            else if (transaction.cpt_ds == 0) // Retrait
-            {
-                if (Banque.verify_cpt_exist(banques, transaction.cpt_ex) && compte_ex.solde >= transaction.solde_trs)
-                {
-                    decimal sumHis = 0m;
-                    if (compte_ex.his_soldes.Count >9)
+                    foreach (var id_compte in banques.Keys)
                     {
-                        compte_ex.his_soldes.RemoveAt(0);
-                    }
-                    foreach (decimal hissolde in compte_ex.his_soldes)
-                    {
-                        sumHis += hissolde;
-                    }
-                    sumHis += transaction.solde_trs;
-
-                    if (sumHis<=1000)
-                    {
-                        compte_ex.RetraitSolde(transaction.solde_trs);
-                        status = "OK";
-                        compte_ex.his_soldes.Add(transaction.solde_trs);
-                    }
-
-                }
-            }
-            else  // Transfer
-            {
-                if (Banque.verify_cpt_exist(banques, transaction.cpt_ds) && Banque.verify_cpt_exist(banques, transaction.cpt_ex))
-                {
-                    if (transaction.solde_trs >= 0 && compte_ex.solde >= transaction.solde_trs)
-                    {
-                        decimal sumHis = 0m;
-                        if (compte_ex.his_soldes.Count > 9)
+                        if (id_compte == transaction.cpt_ex)
                         {
-                            compte_ex.his_soldes.RemoveAt(0);
+                            compte_ex = banques[id_compte];
                         }
-                        foreach (decimal hissolde in compte_ex.his_soldes)
+                        else if (id_compte == transaction.cpt_ds)
                         {
-                            sumHis += hissolde;
+                            compte_ds = banques[id_compte];
                         }
-                        sumHis += transaction.solde_trs;
+                    }
 
-                        if (sumHis <= 1000)
+                    if (transaction.cpt_ex == 0) // Depot
+                    {
+                        if (Banque.verify_cpt_exist(banques, transaction.cpt_ds) && transaction.solde_trs > 0)
                         {
-                            compte_ex.RetraitSolde(transaction.solde_trs);
                             compte_ds.AjoutSolde(transaction.solde_trs);
-                            status = "OK";
-                            compte_ex.his_soldes.Add(transaction.solde_trs);
+                            transaction.status = "OK";
                         }
+                    }
+                    else if (transaction.cpt_ds == 0) // Retrait
+                    {
+                        if (Banque.verify_cpt_exist(banques, transaction.cpt_ex) && compte_ex.solde >= transaction.solde_trs && transaction.solde_trs > 0)
+                        {
+                            decimal sumHis = 0m;
+                            if (compte_ex.his_soldes.Count > 9)
+                            {
+                                compte_ex.his_soldes.RemoveAt(0);
+                            }
+                            foreach (decimal hissolde in compte_ex.his_soldes)
+                            {
+                                sumHis += hissolde;
+                            }
+                            sumHis += transaction.solde_trs;
 
+                            if (sumHis <= 1000)
+                            {
+                                compte_ex.RetraitSolde(transaction.solde_trs);
+                                transaction.status = "OK";
+                            }
+
+                        }
+                    }
+                    else  // Transfer
+                    {
+                        if (Banque.verify_cpt_exist(banques, transaction.cpt_ds) && Banque.verify_cpt_exist(banques, transaction.cpt_ex))
+                        {
+                            if (transaction.solde_trs > 0 && compte_ex.solde >= transaction.solde_trs)
+                            {
+                                decimal sumHis = 0m;
+                                if (compte_ex.his_soldes.Count > 9)
+                                {
+                                    compte_ex.his_soldes.RemoveAt(0);
+                                }
+                                foreach (decimal hissolde in compte_ex.his_soldes)
+                                {
+                                    sumHis += hissolde;
+                                }
+                                sumHis += transaction.solde_trs;
+
+                                if (sumHis <= 1000)
+                                {
+                                    compte_ex.RetraitSolde(transaction.solde_trs);
+                                    compte_ds.AjoutSolde(transaction.solde_trs);
+                                    transaction.status = "OK";
+                                }
+
+                            }
+                        }
                     }
                 }
+                ids_trs.Add(transaction.id_trs);
             }
-            return status;
+            
+            
 
         }
 

@@ -10,7 +10,7 @@ namespace Projet_Bancaire
 {
     public class Banque
     {
-        public int id_cpt { get; set; }
+        public int id_cpt { get; }
         public Compte compte { get; set; }
 
         public Banque(int ID_C, Compte LS)
