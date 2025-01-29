@@ -13,11 +13,11 @@ namespace Projet_banque_II
         public DateTime date_creation { get; set; }
         public DateTime date_resili { get; set; }
         public decimal solde { get; set; }
-        public Dictionary<int, DateTime> id_gs { get; set; }   // le gestionnaire change, enregistre les changems  id - date ou il prend effet
-        public Dictionary<DateTime, decimal> his_soldes { get; set; }  // date - solde vire
+        public List<Tuple<DateTime, int>> id_gs { get; set; }   // le gestionnaire change, enregistre : Date - id gestionnaire
+        public List<Tuple<DateTime, decimal>> his_soldes { get; set; }  // date - solde vire
         public static int nb_comptes {get;set;}
 
-        public Compte(int id, DateTime dc, DateTime dr, decimal s, Dictionary<int, DateTime> gs, Dictionary<DateTime, decimal> hs)
+        public Compte(int id, DateTime dc, DateTime dr, decimal s, List<Tuple<DateTime, int>> gs, List<Tuple<DateTime, decimal>> hs)
         {
             id_cpt = id;
             date_creation = dc;
@@ -32,5 +32,7 @@ namespace Projet_banque_II
         {
             nb_comptes = 0;
         }
+
+
     }
 }

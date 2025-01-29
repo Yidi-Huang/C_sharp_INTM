@@ -12,25 +12,39 @@ namespace Projet_banque_II
         {
             string inputComptes = "C:\\Users\\Formation\\Downloads\\Compte2.csv";
             string inputGests = "C:\\Users\\Formation\\Downloads\\Gests.csv";
-            string outputFile = "C:\\Users\\Formation\\Downloads\\StatutsTransactions.csv";
+            string outputOps = "C:\\Users\\Formation\\Downloads\\StatutOpe.csv";
+            string inputTrs = "C:\\Users\\Formation\\Downloads\\Transaction2.csv";
 
             Dictionary<int, Gestionnaire> gests = Gestionnaire.ChargeGestionnaire(inputGests);
-            foreach (var pair in gests)
-            {
-                Console.WriteLine(pair.Key.ToString()+" "+ pair.Value.nb_trs);
-            }
-
-            Console.WriteLine(" ");
-
             List<Operation> operations = Operation.ChargeOp(inputComptes);
-            Operation.VerifyStatus(operations, gests);
+            List<string> opstatus = new List<string>();
+            Dictionary<int, Compte> comptes = Operation.VerifyStatus(operations, gests);
+
             foreach (var p in operations)
             {
-                Console.WriteLine(p.id_cpt+" "+p.date_op+" "+p.solde_init+" "+p.entree+" "+p.sortie+" "+p.status);
+                opstatus.Add($"{p.id_cpt};{p.status}");
             }
 
-            DateTime h=new DateTime();
-            Console.WriteLine(h);
+            Operation.WriteOpFile(outputOps, opstatus);
+
+
+            Dictionary<int, Transaction> transactions = Transaction.ChargeTransaction(inputTrs);
+
+            foreach (var p in comptes)
+            {
+                Compte compte = p.Value;
+                foreach(var h in compte.id_gs)
+                {
+                    Console.WriteLine(h.Item1+" "+h.Item2);
+                }
+            }
+
+            Transaction.ProcessTrans(comptes, transactions, gests);
+            foreach (var pp in transactions)
+            {
+                Console.WriteLine(pp.Value.id_trs+" "+ pp.Value.date_trs+" "
+                    +pp.Value.montant+" "+pp.Value.cpt_ex+" "+pp.Value.cpt_ds+" "+pp.Value.status);
+            }
 
             Console.ReadKey();
         }

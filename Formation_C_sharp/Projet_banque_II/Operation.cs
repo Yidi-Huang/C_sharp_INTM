@@ -77,7 +77,7 @@ namespace Projet_banque_II
             return operations;
         }
 
-        public static void VerifyStatus(List<Operation> operations, Dictionary<int,Gestionnaire> gestionnaires)
+        public static Dictionary<int, Compte> VerifyStatus(List<Operation> operations, Dictionary<int,Gestionnaire> gestionnaires)
         {
             Dictionary<int, Compte> comptes = new Dictionary<int, Compte>();   // commencer : enregistrer les comptes infos
 
@@ -89,11 +89,12 @@ namespace Projet_banque_II
                     {
                         operation.status = "OK";
 
-                        comptes[operation.id_cpt] = new Compte(0, new DateTime(),new DateTime(),0,new Dictionary<int, DateTime>(),new Dictionary<DateTime, decimal>());
+                        comptes[operation.id_cpt] = new Compte(0, new DateTime(),new DateTime(),0,new List<Tuple<DateTime, int>>(), new List<Tuple<DateTime, decimal>>());
                         comptes[operation.id_cpt].id_cpt = operation.id_cpt;
                         comptes[operation.id_cpt].solde = operation.solde_init;
                         comptes[operation.id_cpt].date_creation = operation.date_op;
-                        comptes[operation.id_cpt].id_gs[operation.entree] = operation.date_op;
+                        //comptes[operation.id_cpt].id_gs[operation.entree] = operation.date_op;
+                        comptes[operation.id_cpt].id_gs.Add(new Tuple<DateTime, int>(operation.date_op, operation.entree));
                         gestionnaires[operation.entree].comptes.Add(operation.id_cpt);
                     }
                 }
@@ -111,9 +112,32 @@ namespace Projet_banque_II
                     if (gestionnaires[operation.entree].comptes.Contains(operation.id_cpt) && gestionnaires.ContainsKey(operation.sortie))  // gest original a ce compte && gest nouveau existe
                     {
                         operation.status = "OK";
-                        comptes[operation.id_cpt].id_gs[operation.sortie] = operation.date_op;
+                        //comptes[operation.id_cpt].id_gs[operation.sortie] = operation.date_op;
+                        comptes[operation.id_cpt].id_gs.Insert(0,new Tuple<DateTime, int>(operation.date_op, operation.sortie));
                         gestionnaires[operation.sortie].comptes.Add(operation.id_cpt);
                         gestionnaires[operation.entree].comptes.Remove(operation.id_cpt);
+                    }
+                }
+            }
+            return comptes;
+        }
+
+        public static void WriteOpFile(string outfile, List<string> OpStatus)
+        {
+            FileStream file = null;
+            StreamWriter srw = null;
+
+            using (file = File.Open(outfile, FileMode.Create, FileAccess.Write))
+            {
+                if (file != null)
+                {
+                    using (srw = new StreamWriter(file))
+                    {
+                        //srw.WriteLine("Matière;Moyenne");
+                        foreach (var status in OpStatus)
+                        {
+                            srw.WriteLine(status);
+                        }
                     }
                 }
             }
