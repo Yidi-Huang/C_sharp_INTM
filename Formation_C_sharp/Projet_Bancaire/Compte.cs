@@ -42,7 +42,7 @@ namespace Projet_Bancaire
                                 bool estDec = decimal.TryParse(infos[1], out decimal solde);
                                 List<decimal> his_soldes = new List<decimal>();
 
-                                if (estInt1 && estDec)
+                                if (estInt1 && estDec && solde >=0)
                                 {
                                     Compte compte = new Compte(id_cpt, solde, his_soldes);
                                     comptes.Add(compte);
