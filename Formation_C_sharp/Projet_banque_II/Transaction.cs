@@ -106,7 +106,7 @@ namespace Projet_banque_II
                 if (compte_ex != null)
                 {
                     //Console.WriteLine(compte_ex.id_gs[0].Item1.ToString());
-                    int id_currentgs = FindCurentGest(transaction.date_trs, compte_ex.id_gs);   // trouver id gestionnaire
+                    int id_currentgs = FindCurrentGest(transaction.date_trs, compte_ex.id_gs);   // trouver id gestionnaire
                     foreach (var id_gest in gestionnaires.Keys)
                     {
                         if (id_gest == id_currentgs)
@@ -118,7 +118,7 @@ namespace Projet_banque_II
 
                 if (compte_ds != null)
                 {
-                    int id_currentgs = FindCurentGest(transaction.date_trs, compte_ds.id_gs);   // trouver id gestionnaire
+                    int id_currentgs = FindCurrentGest(transaction.date_trs, compte_ds.id_gs);   // trouver id gestionnaire
                     foreach (var id_gest in gestionnaires.Keys)
                     {
                         if (id_gest == id_currentgs)
@@ -231,7 +231,7 @@ namespace Projet_banque_II
             }
         }
 
-        public static int FindCurentGest(DateTime date_trs, List<Tuple<DateTime, int>> id_gs)
+        public static int FindCurrentGest(DateTime date_trs, List<Tuple<DateTime, int>> id_gs)
         {
             int id =0 ;
             foreach (var tup in id_gs)
