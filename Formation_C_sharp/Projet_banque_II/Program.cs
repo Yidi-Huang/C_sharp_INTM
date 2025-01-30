@@ -12,12 +12,15 @@ namespace Projet_banque_II
         {
             string inputComptes = "C:\\Users\\Formation\\Downloads\\Compte2.csv";
             string inputGests = "C:\\Users\\Formation\\Downloads\\Gests.csv";
-            string outputOps = "C:\\Users\\Formation\\Downloads\\StatutOpe.csv";
             string inputTrs = "C:\\Users\\Formation\\Downloads\\Transaction2.csv";
+
+            string outputOps = "C:\\Users\\Formation\\Downloads\\StatutOpe.csv";
+            string outputTrs = "C:\\Users\\Formation\\Downloads\\StatutTrs.csv";
 
             Dictionary<int, Gestionnaire> gests = Gestionnaire.ChargeGestionnaire(inputGests);
             List<Operation> operations = Operation.ChargeOp(inputComptes);
             List<string> opstatus = new List<string>();
+            List<string> trsstatus = new List<string>();
             Dictionary<int, Compte> comptes = Operation.VerifyStatus(operations, gests);
 
             foreach (var p in operations)
@@ -30,20 +33,22 @@ namespace Projet_banque_II
 
             Dictionary<int, Transaction> transactions = Transaction.ChargeTransaction(inputTrs);
 
-            foreach (var p in comptes)
-            {
-                Compte compte = p.Value;
-                foreach(var h in compte.id_gs)
-                {
-                    Console.WriteLine(h.Item1+" "+h.Item2);
-                }
-            }
-
             Transaction.ProcessTrans(comptes, transactions, gests);
-            foreach (var pp in transactions)
+            foreach (var t in transactions)
             {
-                Console.WriteLine(pp.Value.id_trs+" "+ pp.Value.date_trs+" "
-                    +pp.Value.montant+" "+pp.Value.cpt_ex+" "+pp.Value.cpt_ds+" "+pp.Value.status);
+                trsstatus.Add($"{t.Value.id_trs};{t.Value.status}");
+                Console.WriteLine(t.Value.id_trs+" "+ t.Value.date_trs+" "
+                    +t.Value.montant+" "+t.Value.cpt_ex+" "+t.Value.cpt_ds+" "+t.Value.status);
+            }
+            Transaction.WriteTrsFile(outputTrs, trsstatus);
+
+            Console.WriteLine(Compte.nb_comptes+" "+Transaction.nb_trs+" "+Transaction.nb_ok+" "+Transaction.nb_ko+" "+Transaction.sum_ok);
+            Console.WriteLine(" ");
+
+            foreach (var pair in gests)
+            {
+                Gestionnaire gest = pair.Value;
+                Console.WriteLine(gest.id_gs+" "+gest.frais_gs+" "+gest.type_gs);
             }
 
             Console.ReadKey();
