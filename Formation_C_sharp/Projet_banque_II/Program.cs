@@ -42,7 +42,6 @@ namespace Projet_banque_II
             }
             Transaction.WriteTrsFile(outputTrs, trsstatus);
 
-            Console.WriteLine(" ");
             Console.WriteLine(Compte.nb_comptes+" "+Transaction.nb_trs+" "+Transaction.nb_ok+" "+Transaction.nb_ko+" "+Transaction.sum_ok);
             Console.WriteLine(" ");
 
