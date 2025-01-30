@@ -37,20 +37,20 @@ namespace Projet_banque_II
             foreach (var t in transactions)
             {
                 trsstatus.Add($"{t.Value.id_trs};{t.Value.status}");
-                Console.WriteLine(t.Value.id_trs+" "+ t.Value.date_trs+" "
-                    +t.Value.montant+" "+t.Value.cpt_ex+" "+t.Value.cpt_ds+" "+t.Value.status);
+                //Console.WriteLine(t.Value.id_trs+" "+ t.Value.date_trs+" "
+                //    +t.Value.montant+" "+t.Value.cpt_ex+" "+t.Value.cpt_ds+" "+t.Value.status);
             }
             Transaction.WriteTrsFile(outputTrs, trsstatus);
 
+            Console.WriteLine(" ");
             Console.WriteLine(Compte.nb_comptes+" "+Transaction.nb_trs+" "+Transaction.nb_ok+" "+Transaction.nb_ko+" "+Transaction.sum_ok);
             Console.WriteLine(" ");
 
             foreach (var pair in gests)
             {
                 Gestionnaire gest = pair.Value;
-                Console.WriteLine(gest.id_gs+" "+gest.frais_gs+" "+gest.type_gs);
+                Console.WriteLine(gest.id_gs+" "+gest.frais_gs+" ");
             }
-
             Console.ReadKey();
         }
     }

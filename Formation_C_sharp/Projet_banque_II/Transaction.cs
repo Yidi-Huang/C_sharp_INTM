@@ -199,8 +199,6 @@ namespace Projet_banque_II
 
                         if (sum_trs <= 1000 && sum_week <= 2000)
                         {
-                            Console.WriteLine("hii " + gs_ex.id_gs + gs_ds.id_gs);
-
                             transaction.status = "OK";
                             compte_ex.solde -= transaction.montant;
                             compte_ds.solde += transaction.montant;
@@ -277,7 +275,7 @@ namespace Projet_banque_II
         public static decimal GetWeekSum(DateTime date_trs, List<Tuple<DateTime, decimal>> his_soldes)
         {
             decimal sum_week = 0m;
-            DateTime start_date = date_trs.AddDays(-7);
+            DateTime start_date = date_trs.AddDays(-6);
 
             foreach (var tup in his_soldes)
             {
