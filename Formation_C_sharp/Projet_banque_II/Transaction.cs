@@ -252,7 +252,7 @@ namespace Projet_banque_II
             {
                 sum_trs = 0;
             }
-            else if (his_soldes.Count < nb_trs)
+            else if (his_soldes.Count <= nb_trs)
             {
                 foreach(var tup in his_soldes)
                 {
@@ -262,7 +262,7 @@ namespace Projet_banque_II
             }
             else
             {
-                for (int i=his_soldes.Count-nb_trs+1;i<=his_soldes.Count-1;i++)
+                for (int i=his_soldes.Count-nb_trs;i<=his_soldes.Count-1;i++)
                 {
                     decimal s = his_soldes[i].Item2;
                     sum_trs += s;
