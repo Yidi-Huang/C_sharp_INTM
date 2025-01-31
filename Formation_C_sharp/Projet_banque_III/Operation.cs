@@ -91,7 +91,6 @@ namespace Projet_banque_III
         public static Dictionary<int,Compte> VerifyOp(List<Operation> operations, Dictionary<int,Gestionnaire> gestionnaires)
         {
             Dictionary<int, Compte> comptes = new Dictionary<int, Compte>();
-            List<string> other_cpt = new List<string> { "L","C","T"};
 
             foreach (Operation operation in operations)
             {
@@ -102,36 +101,40 @@ namespace Projet_banque_III
                         if (operation.type == "J" && operation.age >= 8 && operation.age <= 17)   // Compte jeune
                         {
                             operation.status = "OK";
-                            comptes[operation.id_cpt] = new CompteJeune(0, null, new DateTime(), new DateTime(), 0m, new List<Tuple<DateTime, int>>(), new List<Tuple<DateTime, decimal>>(), 0);
-                            comptes[operation.id_cpt].id_cpt = operation.id_cpt;
-                            comptes[operation.id_cpt].type = operation.type;
-                            comptes[operation.id_cpt].date_creation = operation.date_op;
-                            comptes[operation.id_cpt].solde = operation.solde_init + operation.age * 10m;
-                            comptes[operation.id_cpt].age = operation.age;
-                            comptes[operation.id_cpt].id_gs.Add(new Tuple<DateTime, int>(operation.date_op, operation.entree));
+                            CompteJeune compteJeune = new CompteJeune(0, null, new DateTime(), new DateTime(), 0m, new List<Tuple<DateTime, int>>(), new List<Tuple<DateTime, decimal>>(), 0);
+                            compteJeune.id_cpt = operation.id_cpt;
+                            compteJeune.type = operation.type;
+                            compteJeune.date_creation = operation.date_op;
+                            compteJeune.solde = operation.solde_init + operation.age * 10m;
+                            compteJeune.age = operation.age;
+                            compteJeune.id_gs.Add(new Tuple<DateTime, int>(operation.date_op, operation.entree));
                             gestionnaires[operation.entree].comptes.Add(operation.id_cpt);
+                            comptes[operation.id_cpt] = compteJeune;
                         }
                         else if (operation.type=="L")         // Livret
                         {
                             operation.status = "OK";
-                            comptes[operation.id_cpt] = new CompteLivret(0, null, new DateTime(), new DateTime(), 0m, new List<Tuple<DateTime, int>>(), new List<Tuple<DateTime, decimal>>(), 0.02m);
-                            comptes[operation.id_cpt].id_cpt = operation.id_cpt;
-                            comptes[operation.id_cpt].type = operation.type;
-                            comptes[operation.id_cpt].date_creation = operation.date_op;
-                            comptes[operation.id_cpt].solde = operation.solde_init;
-                            comptes[operation.id_cpt].id_gs.Add(new Tuple<DateTime, int>(operation.date_op, operation.entree));
+                            CompteLivret compteLivret = new CompteLivret(0, null, new DateTime(), new DateTime(), 0m, new List<Tuple<DateTime, int>>(), new List<Tuple<DateTime, decimal>>(), 0m);
+                            compteLivret.id_cpt = operation.id_cpt;
+                            compteLivret.type = operation.type;
+                            compteLivret.date_creation = operation.date_op;
+                            compteLivret.solde = operation.solde_init;
+                            compteLivret.id_gs.Add(new Tuple<DateTime, int>(operation.date_op, operation.entree));
                             gestionnaires[operation.entree].comptes.Add(operation.id_cpt);
+                            comptes[operation.id_cpt] = compteLivret;
                         }
-                        else if (operation.type=="T")   // CompteATerme
+                        else if (operation.type=="T" && operation.solde_init>=200m)   // CompteATerme
                         {
                             operation.status = "OK";
-                            comptes[operation.id_cpt] = new CompteATerme(0, null, new DateTime(), new DateTime(), 0m, new List<Tuple<DateTime, int>>(), new List<Tuple<DateTime, decimal>>(), 0.05m);
-                            comptes[operation.id_cpt].id_cpt = operation.id_cpt;
-                            comptes[operation.id_cpt].type = operation.type;
-                            comptes[operation.id_cpt].date_creation = operation.date_op;
-                            comptes[operation.id_cpt].solde = operation.solde_init;
-                            comptes[operation.id_cpt].id_gs.Add(new Tuple<DateTime, int>(operation.date_op, operation.entree));
+                            CompteATerme compteATerme = new CompteATerme(0, null, new DateTime(), new DateTime(), 0m, new List<Tuple<DateTime, int>>(), new List<Tuple<DateTime, decimal>>(), 0m, new DateTime());
+                            compteATerme.id_cpt = operation.id_cpt;
+                            compteATerme.type = operation.type;
+                            compteATerme.date_creation = operation.date_op;
+                            compteATerme.solde = operation.solde_init;
+                            compteATerme.date_fin = operation.date_op.AddYears(5);
+                            compteATerme.id_gs.Add(new Tuple<DateTime, int>(operation.date_op, operation.entree));
                             gestionnaires[operation.entree].comptes.Add(operation.id_cpt);
+                            comptes[operation.id_cpt] = compteATerme;
                         }
                         else if (operation.type=="C")     // Compte Courant
                         {
@@ -147,13 +150,27 @@ namespace Projet_banque_III
 ;
                     }
                 }
-                if (operation.entree < 0 && operation.sortie > 0)           // Résiliation du compte
+                if (operation.entree < 0 && operation.sortie > 0)     // Résiliation du compte
                 {
                     if (comptes.ContainsKey(operation.id_cpt) && gestionnaires[operation.sortie].comptes.Contains(operation.id_cpt)) // compte existe && compte appartient au gest correct
                     {
-                        operation.status = "OK";
-                        comptes[operation.id_cpt].date_resili = operation.date_op;
-                        gestionnaires[operation.sortie].comptes.Remove(operation.id_cpt);
+                        
+                        if (comptes[operation.id_cpt].type=="T")
+                        {
+                            CompteATerme compteATerme = (CompteATerme)comptes[operation.id_cpt];
+                            if (operation.date_op > compteATerme.date_fin)
+                            {
+                                operation.status = "OK";
+                                comptes[operation.id_cpt].date_resili = operation.date_op;
+                                gestionnaires[operation.sortie].comptes.Remove(operation.id_cpt);
+                            }
+                        }
+                        else
+                        {
+                            operation.status = "OK";
+                            comptes[operation.id_cpt].date_resili = operation.date_op;
+                            gestionnaires[operation.sortie].comptes.Remove(operation.id_cpt);
+                        }
                     }
 
                 }
@@ -169,6 +186,27 @@ namespace Projet_banque_III
                 }
             }
             return comptes;
+        }
+
+        public static void WriteOpFile(string outfile, List<string> OpStatus)
+        {
+            FileStream file = null;
+            StreamWriter srw = null;
+
+            using (file = File.Open(outfile, FileMode.Create, FileAccess.Write))
+            {
+                if (file != null)
+                {
+                    using (srw = new StreamWriter(file))
+                    {
+                        //srw.WriteLine("Matière;Moyenne");
+                        foreach (var status in OpStatus)
+                        {
+                            srw.WriteLine(status);
+                        }
+                    }
+                }
+            }
         }
     }
 }
