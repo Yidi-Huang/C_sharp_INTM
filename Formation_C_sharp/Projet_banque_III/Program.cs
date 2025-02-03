@@ -21,6 +21,7 @@ namespace Projet_banque_III
             List<Operation> operations = Operation.ChargeOp(inputComptes);
             Dictionary<int, Compte> comptes = Operation.VerifyOp(operations, gests);
             Dictionary<int, Transaction> transactions = Transaction.ChargeTransaction(inputTrs);
+            Transaction.ProcessTrans(comptes, transactions, gests);
 
             List<string> StatusOps = new List<string>();
 
@@ -35,13 +36,13 @@ namespace Projet_banque_III
 
             foreach (var cs in comptes)
             {
-                Console.WriteLine(cs.Key+" "+cs.Value+" "+cs.Value.date_resili);
+                Console.WriteLine(cs.Key+" "+cs.Value+" "+cs.Value.solde);
             }
 
             foreach (var trs in transactions)
             {
                 Transaction tr = trs.Value;
-                Console.WriteLine(tr.id_trs+" "+tr.date_trs);
+                Console.WriteLine(tr.id_trs+" "+tr.date_trs+" "+tr.status);
             }
 
             //:---------------------------------------------------------------
