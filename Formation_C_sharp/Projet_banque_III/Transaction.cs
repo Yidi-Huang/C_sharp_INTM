@@ -144,12 +144,28 @@ namespace Projet_banque_III
                         decimal sum_week = GetWeekSum(transaction.date_trs, compte_ex.his_soldes);
                         sum_week += transaction.montant;
 
-                        decimal montant_max = 1000;
+                        // vérifier l'âge <= 18
                         if (compte_ex.type=="J")
                         {
                             CompteJeune compteJeune = (CompteJeune)compte_ex;
+                            int rest_year = 18 - compteJeune.age;
+                            DateTime adult_day = compteJeune.date_creation.AddYears(rest_year);
+                            if (transaction.date_trs >= adult_day)
+                            {
+                                compte_ex.type = "C";
+                            }
+                        }
+
+                        decimal montant_max = 1000m;    // max de montant spécifique pour compte Jeune
+                        if (compte_ex.type=="J")
+                        {
+                            CompteJeune compteJeune = (CompteJeune)compte_ex;
+                            compteJeune.age = CalculateAge(compteJeune.age, compteJeune.date_creation, transaction.date_trs);
                             montant_max = compteJeune.age / 18m * 1000m;
                         }
+
+                        //
+                        Console.WriteLine(montant_max);
 
                         if (sum_trs <= montant_max && sum_week <= 2000)
                         {
@@ -173,7 +189,27 @@ namespace Projet_banque_III
                         decimal sum_week = GetWeekSum(transaction.date_trs, compte_ex.his_soldes);
                         sum_week += transaction.montant;
 
-                        if (sum_trs <= 1000 && sum_week <= 2000)
+                        // vérifier l'âge <= 18
+                        if (compte_ex.type == "J")
+                        {
+                            CompteJeune compteJeune = (CompteJeune)compte_ex;
+                            int rest_year = 18 - compteJeune.age;
+                            DateTime adult_day = compteJeune.date_creation.AddYears(rest_year);
+                            if (transaction.date_trs >= adult_day)
+                            {
+                                compte_ex.type = "C";
+                            }
+                        }
+
+                        decimal montant_max = 1000m;    // max de montant spécifique pour compte Jeune
+                        if (compte_ex.type == "J")
+                        {
+                            CompteJeune compteJeune = (CompteJeune)compte_ex;
+                            compteJeune.age = CalculateAge(compteJeune.age, compteJeune.date_creation, transaction.date_trs);
+                            montant_max = compteJeune.age / 18m * 1000m;
+                        }
+                        
+                        if (sum_trs <= montant_max && sum_week <= 2000)
                         {
                             transaction.status = "OK";
                             compte_ex.solde -= transaction.montant;
@@ -188,7 +224,7 @@ namespace Projet_banque_III
                                 }
                                 else if (gs_ex.type_gs == "Entreprise")
                                 {
-                                    gs_ex.frais_gs += 10m;
+                                    gs_ex.frais_gs += 10.00m;
                                 }
                             }
                         }
@@ -234,7 +270,6 @@ namespace Projet_banque_III
                     sum_trs += s;
                 }
             }
-
             return sum_trs;
         }
 
@@ -250,9 +285,39 @@ namespace Projet_banque_III
                     sum_week += tup.Item2;
                 }
             }
-
             return sum_week;
         }
 
+        public static int CalculateAge(int age, DateTime d1, DateTime d2)
+        {
+            DateTime dn = d1.AddYears(-age);
+            int n_age = d2.Year - dn.Year;
+            if (d2.Month<dn.Month || (d2.Month==dn.Month && d2.Day<dn.Day))
+            {
+                n_age--;
+            }
+            return n_age;
+        }
+
+        public static void WriteTrsFile(string outfile, List<string> TrsStatus)
+        {
+            FileStream file = null;
+            StreamWriter srw = null;
+
+            using (file = File.Open(outfile, FileMode.Create, FileAccess.Write))
+            {
+                if (file != null)
+                {
+                    using (srw = new StreamWriter(file))
+                    {
+                        //srw.WriteLine("Matière;Moyenne");
+                        foreach (var status in TrsStatus)
+                        {
+                            srw.WriteLine(status);
+                        }
+                    }
+                }
+            }
+        }
     }
 }

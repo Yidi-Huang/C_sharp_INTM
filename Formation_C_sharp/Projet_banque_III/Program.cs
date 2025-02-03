@@ -24,6 +24,7 @@ namespace Projet_banque_III
             Transaction.ProcessTrans(comptes, transactions, gests);
 
             List<string> StatusOps = new List<string>();
+            List<string> StatusTrs = new List<string>();
 
             foreach (var op in operations)
             {
@@ -31,18 +32,31 @@ namespace Projet_banque_III
             }
             Operation.WriteOpFile(outputOps,StatusOps);
 
+            foreach (var trs in transactions)
+            {
+                Transaction tr = trs.Value;
+                StatusTrs.Add($"{tr.id_trs};{tr.status}");
+            }
+            Transaction.WriteTrsFile(outputTrs, StatusTrs);
+
 
             //--------------------------------------------------------------
 
             foreach (var cs in comptes)
             {
-                Console.WriteLine(cs.Key+" "+cs.Value+" "+cs.Value.solde);
+                Console.WriteLine(cs.Key+" "+cs.Value+" "+cs.Value.solde+" "+ cs.Value.type);
             }
 
             foreach (var trs in transactions)
             {
                 Transaction tr = trs.Value;
                 Console.WriteLine(tr.id_trs+" "+tr.date_trs+" "+tr.status);
+            }
+
+            foreach (var gs in gests)
+            {
+                Gestionnaire g = gs.Value;
+                Console.WriteLine(g.id_gs+" "+g.frais_gs);
             }
 
             //:---------------------------------------------------------------
