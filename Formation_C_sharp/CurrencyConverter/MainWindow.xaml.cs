@@ -32,8 +32,13 @@ namespace CurrencyConverter
         private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
         {
             //Regular Expression to add regex add library using System.Text.RegularExpressions;
-            Regex regex = new Regex("[^0-9]+");
-            e.Handled = regex.IsMatch(e.Text);
+            
+            //Regex regex = new Regex("[^0-9]+");
+            //e.Handled = regex.IsMatch(e.Text);
+            
+            Regex regex = new Regex(@"^[0-9]*(\,[0-9]*)?$");
+            e.Handled = !regex.IsMatch(e.Text);
+            
         }
 
 
