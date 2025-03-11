@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.IO;
 
 namespace CurrencyConverter
 {
@@ -32,13 +33,9 @@ namespace CurrencyConverter
         private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
         {
             //Regular Expression to add regex add library using System.Text.RegularExpressions;
-            
             //Regex regex = new Regex("[^0-9]+");
-            //e.Handled = regex.IsMatch(e.Text);
-            
             Regex regex = new Regex(@"^[0-9]*(\,[0-9]*)?$");
             e.Handled = !regex.IsMatch(e.Text);
-            
         }
 
 
@@ -98,6 +95,9 @@ namespace CurrencyConverter
 
                 //Show in label converted currency and converted currency name.
                 lblCurrency.Content = cmbToCurrency.Text + " " + ConvertedValue.ToString("N3");
+
+                //Store all convert history in a txt file
+                WriteConvertHistory("C:/Users/FORMATION/Downloads/ConvertedHistory.csv", ConvertedValue);
             }
         }
 
@@ -136,6 +136,28 @@ namespace CurrencyConverter
             cmbToCurrency.DisplayMemberPath = "Text";
             cmbToCurrency.SelectedValuePath = "Value";
             cmbToCurrency.SelectedIndex = 0;
+        }
+
+
+        private void WriteConvertHistory(string outfile, double ConvertedValue)
+        {
+            FileStream file = null;
+            StreamWriter srw = null;
+
+            using (file = File.Open(outfile, FileMode.Append, FileAccess.Write))
+            {
+                if (file != null)
+                {
+                    using (srw = new StreamWriter(file))
+                    {
+                        //srw.WriteLine("Currency_from;Amount_from;Currency_to;Amount_to");
+                        srw.WriteLine(cmbFromCurrency.Text + ";" + txtCurrency.Text + ";"
+                            + cmbToCurrency.Text + ";" + ConvertedValue.ToString("N3"));
+
+
+                    }
+                }
+            }
         }
     }
 }
